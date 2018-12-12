@@ -1,0 +1,10 @@
+/.editorconfig
+/.prettierrc.js
+/.eslintrc.js
+
+/rollup.config.js
+
+/cjs/__tests
+/src
+
+/*.md
