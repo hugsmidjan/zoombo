@@ -104,7 +104,8 @@ The optional React helper comes in two flavours:
 
 ```jsx
 import React from 'react';
-import Zoombo from 'zoombo/react';
+import Zoombo from 'zoombo/react'; // esm version
+// import Zoombo from 'zoombo/cjs/react'; // CommonJS version
 
 const logState = (zoomboState) => {
   console.log('zoombo', zoomboState);
@@ -148,7 +149,9 @@ signal for activating the `.start()` and `.stop()` methods.
 
 ```jsx
 import React from 'react';
-import Zoombo from 'zoombo/react';
+import Zoombo from 'zoombo/react'; // esm version
+// import Zoombo from 'zoombo/cjs/react'; // CommonJS version
+
 
 const logState = (zoomboState) => {
   console.log('zoombo', zoomboState);

@@ -6,6 +6,7 @@
 
 - ...
 - docs: Fix error in basic code-example
+- docs: Clarify different import paths for CommonJS and ESM versions
 
 ## 1.0.0
 
