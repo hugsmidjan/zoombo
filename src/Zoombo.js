@@ -5,7 +5,7 @@ const defaultOpts = {
   initialX: 0.5,
   initialY: 0.5,
   maxZoom: 4,
-  minZoom: 0.5,
+  minZoom: 1,
   marginX: 0,
   marginY: 0,
   zoomStep: 2,

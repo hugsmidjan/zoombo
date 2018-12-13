@@ -5,6 +5,7 @@
 <!-- Add new lines here. Version number will be decided later -->
 
 - ...
+- fix: Set default `minZoom` to 1
 - docs: Fix error in basic code-example
 - docs: Clarify different import paths for CommonJS and ESM versions
 
