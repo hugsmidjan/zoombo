@@ -5,9 +5,10 @@
 <!-- Add new lines here. Version number will be decided later -->
 
 - ...
+- docs: Fix error in basic code-example
 
 ## 1.0.0
 
-_2018-12-14_
+_2018-12-13_
 
 - Initial release including basic React components

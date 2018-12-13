@@ -21,8 +21,7 @@ yarn add --dev zoombo
 
 ```js
 import Zoombo from 'zoombo';
-const figureElm = containerElm.querySelector('.figure');
-figureElm.style.transformOrigin = '0 0';
+const figureElm = document.querySelector('.figure');
 
 const myZoombo = Zoombo({
   refElm: figureElm,
