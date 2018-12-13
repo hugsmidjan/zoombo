@@ -1,6 +1,6 @@
 {
   "name": "zoombo",
-  "version": "1.0.1-wip",
+  "version": "1.0.1",
   "description": "Element pinch zoom and pan behaviour handler - supporting touch, mouse and trackpad events.",
   "main": "cjs/Zoombo.js",
   "module": "Zoombo.js",
