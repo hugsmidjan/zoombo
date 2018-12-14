@@ -45,7 +45,14 @@ const Zoombo = (options) => {
     isDragging: false,
   };
 
-  const getState = () => Object.assign({}, state);
+  let _exportedState;
+  let _exportedStateVersion;
+  const exportState = () => {
+    if (_stateVersion !== _exportedStateVersion) {
+      _exportedState = Object.assign({}, state);
+    }
+    return _exportedState;
+  };
 
   const eventMeta = {
     refElm: options.refElm,
@@ -64,21 +71,23 @@ const Zoombo = (options) => {
     eventMeta,
     setState,
     onStart: () => {
-      state.isDragging = true;
-      _onStart && _onStart(getState());
+      setState('isDragging', true);
+      _changeStateVersion = _stateVersion;
+      _onStart && _onStart(exportState());
     },
     onChange: () => {
       clearTimeout(_throttledOnChange);
       _throttledOnChange = setTimeout(() => {
         if (_stateVersion !== _changeStateVersion) {
-          _onChange(getState());
+          _onChange(exportState());
           _changeStateVersion = _stateVersion;
         }
       }, 0);
     },
     onEnd: () => {
-      state.isDragging = false;
-      _onEnd && _onEnd(getState());
+      setState('isDragging', false);
+      _changeStateVersion = _stateVersion;
+      _onEnd && _onEnd(exportState());
     },
   };
   innards.actions = Object.keys(actions).reduce((acc, action) => {
@@ -96,7 +105,7 @@ const Zoombo = (options) => {
   let started = false;
   const instance = {
     actions: innards.actions,
-    getState,
+    getState: exportState,
 
     start(refElm) {
       if (!started) {
