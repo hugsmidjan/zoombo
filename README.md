@@ -14,6 +14,7 @@ yarn add --dev zoombo
 - [React Component](#react-component)
   - [Render-props version](#render-props-version)
   - [HOC version](#hoc-version)
+- [Zoombo state](#zoombo-state)
 - [Actions](#actions)
 - [API](#api)
 
@@ -32,9 +33,8 @@ const myZoombo = Zoombo({
     figureElm.classList.add('figure--is-dragging');
   },
   onChange: (state) => {
-    figureElm.style.transform =
-      `scale(${state.zoom}) ` +
-      `translate(${-100 * state.x + 50}%, ${-100 * state.y + 50}%)`;
+    figureElm.style.transform = state.cssTransform;
+    // See chapter on zoombo state properties below...
   },
   onEnd: (state) => {
     figureElm.classList.remove('figure--is-dragging');
@@ -47,11 +47,12 @@ myZoombo.start(); // bind DOM events
 The returned instance object has a few useful methods...
 
 ```js
-// Perform actions (More info below...)
+// Perform actions
 myZoombo.actions.panTo(0.25, 0.6);
 myZoombo.actions.zoomIn();
+// etc...
 
-// Inspect the current state...
+// Inspect the current zoombo state...
 const currentState = myZoombo.getState();
 
 // Modify the options
@@ -126,11 +127,7 @@ const MyFigureComponent = (props) => (
           'figure' + (zoombo.isDragging ? ' figure--is-dragging' : '')
         }
         ref={zoomboRef}
-        style={{
-          transform:
-            `scale(${zoombo.zoom}) ` +
-            `translate(${-100 * zoombo.x + 50}%, ${-100 * zoombo.y + 50}%)`,
-        }}
+        style={{ transform: zoombo.cssTransform }}
       >
         <img src={props.src} alt={props.altText} />
       </div>
@@ -152,7 +149,6 @@ import React from 'react';
 import Zoombo from 'zoombo/react'; // esm version
 // import Zoombo from 'zoombo/cjs/react'; // CommonJS version
 
-
 const logState = (zoomboState) => {
   console.log('zoombo', zoomboState);
 };
@@ -163,11 +159,7 @@ const MyFigureComponent = (props) => {
     <div
       className={'figure' + (zoombo.isDragging ? ' figure--is-dragging' : '')}
       ref={zoomboRef}
-      style={{
-        transform:
-          `scale(${zoombo.zoom}) ` +
-          `translate(${-100 * zoombo.x + 50}%, ${-100 * zoombo.y + 50}%)`,
-      }}
+      style={{ transform: zoombo.cssTransform }}
     >
       <img src={props.src} alt={props.altText} />
     </div>
@@ -198,6 +190,29 @@ const propsToZoomboOpts = (props) => ({
 
 export default Zoombo.withZoombo(MyFigureComponent, propsToZoomboOpts);
 ```
+
+## Zoombo state
+
+The Zoombo state exposed to the `onStart`, `onChange` and `onEnd` callbacks,
+includes these basic props:
+
+- **`zoom: number`** - The current zoom factor
+- **`x: number`**, **`y: number`** - The current focal/center points (bounded
+  by `zoom`, `opts.marginX` and `opts.marginY`)
+- **`isDragging: boolean`** – Flag indicating if the user is currently
+  dragging/pinching/etc.
+
+The state also includes some precalculated CSS-friendly props:
+
+- **`cssSize: number`** – Percentage for use for `width` and `height`
+  (`100 * state.zoom`)
+- **`cssTop: number`**, **`cssLeft: number`** – Percentage for CSS positioning
+  (`-cssSize * state.{x|y} + 50`)
+- **`cssTranslateX: number`**, **`cssTranslateY: number`** – Percentage for
+  translation offsets (`-100 * state.{x|y} + 50`)
+- **`cssTransform: string`** – Ready to use transformation string in the form
+  of:
+  `scale(${state.zoom}) translate3d(${cssTranslateX}%, ${cssTranslateY}%, 0)`,
 
 ## Actions
 

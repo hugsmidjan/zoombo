@@ -49,7 +49,22 @@ const Zoombo = (options) => {
   let _exportedStateVersion;
   const exportState = () => {
     if (_stateVersion !== _exportedStateVersion) {
-      _exportedState = Object.assign({}, state);
+      const cssSize = 100 * state.zoom;
+      const cssTranslateX = -100 * state.x + 50;
+      const cssTranslateY = -100 * state.y + 50;
+      _exportedState = Object.assign(
+        {
+          cssSize,
+          cssTop: -cssSize * state.y + 50,
+          cssLeft: -cssSize * state.x + 50,
+          cssTranslateX,
+          cssTranslateY,
+          cssTransform:
+            `scale(${state.zoom}) ` +
+            `translate3d(${cssTranslateX}%, ${cssTranslateY}%, 0)`,
+        },
+        state
+      );
     }
     return _exportedState;
   };

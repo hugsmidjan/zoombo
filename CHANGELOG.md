@@ -5,6 +5,7 @@
 <!-- Add new lines here. Version number will be decided later -->
 
 - ...
+- feat: Add pre-calculated CSS-friendly props to exported state
 - feat: Memoize exported state
 - fix (react): Use `parseFloat` when type-casting string props
 
