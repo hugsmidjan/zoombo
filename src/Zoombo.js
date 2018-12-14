@@ -27,7 +27,6 @@ const Zoombo = (options) => {
   const opts = Zoombo.getDefaults();
   _updateOpts(options.opts);
 
-  let _stateVersion = {};
   const setState = (key, val, silent) => {
     if (state[key] !== val) {
       state[key] = val;
@@ -35,6 +34,7 @@ const Zoombo = (options) => {
     }
   };
 
+  let _stateVersion = {};
   const state = {
     // zoom,
     // x,
@@ -55,7 +55,7 @@ const Zoombo = (options) => {
   const _onStart = options.onStart;
   const _onChange = options.onChange;
   const _onEnd = options.onEnd;
-  let _lastStateVersion = _stateVersion;
+  let _changeStateVersion = _stateVersion;
   let _throttledOnChange;
 
   const innards = {
@@ -70,9 +70,9 @@ const Zoombo = (options) => {
     onChange: () => {
       clearTimeout(_throttledOnChange);
       _throttledOnChange = setTimeout(() => {
-        if (_stateVersion !== _lastStateVersion) {
+        if (_stateVersion !== _changeStateVersion) {
           _onChange(getState());
-          _lastStateVersion = _stateVersion;
+          _changeStateVersion = _stateVersion;
         }
       }, 0);
     },
