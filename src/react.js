@@ -32,7 +32,7 @@ export default class ZoomboComponent extends React.Component {
     // Tolerate JSX string props where numbers are expected
     const opts = Object.keys(props).reduce((acc, name) => {
       const propValue = props[name];
-      acc[name] = typeof propValue !== 'string' ? propValue : parseInt(propValue) || 0;
+      acc[name] = typeof propValue !== 'string' ? propValue : parseFloat(propValue) || 0;
       return acc;
     }, {});
 
